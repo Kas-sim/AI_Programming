@@ -16,6 +16,25 @@ setup_count = 0
 other_types = 0
 
 
+Pdfs = Path("D:/Downloads/PDFs")
+Pdfs.mkdir(parents=True, exist_ok=True)
+Office = Path("D:/Downloads/Office files")
+Office.mkdir(parents=True, exist_ok=True)
+text = Path("D:/Downloads/Text files")
+text.mkdir(parents=True, exist_ok=True)
+images = Path("D:/Downloads/Images")
+images.mkdir(parents=True, exist_ok=True)
+videos = Path("D:/Downloads/Videos")
+videos.mkdir(parents=True, exist_ok=True) 
+audio = Path("D:/Downloads/Audio files")
+audio.mkdir(parents=True, exist_ok=True) 
+coding = Path("D:/Downloads/Coding Files")
+coding.mkdir(parents=True, exist_ok=True) 
+setup = Path("D:/Downloads/Setups")
+setup.mkdir(parents=True, exist_ok=True)
+        
+
+
 for entry in entries:
     if entry.is_dir():
         folder_count += 1
@@ -23,63 +42,47 @@ for entry in entries:
         ext = entry.suffix.lower()
         if ext == ".pdf":
             pdf_count += 1
-            Pdfs = Path("D:/Downloads/PDFs")
-            Pdfs.mkdir(parents=True, exist_ok=True)
             shutil.move(entry, Pdfs)
             print(f"Moved {entry} -> {Pdfs}!")
 
         elif ext == ".docx" or ext == ".xlsx" or ext == ".pptx" or ext == ".accdb":
             office_files += 1
-            Office = Path("D:/Downloads/Office files")
-            Office.mkdir(parents=True, exist_ok=True)
             shutil.move(entry, Office)
             print(f"Moved {entry} -> {Office}")
 
         elif ext in (".csv", ".json", ".txt", ".md"):
             text_count += 1
 
-            text = Path("D:/Downloads/Text files")
-            text.mkdir(parents=True, exist_ok=True)
             shutil.move(entry, text)
             print(f"Moved {entry} -> {text}")
 
         elif ext in (".png", ".jpg", ".jpeg", ".ico"):
             images_count += 1
 
-            images = Path("D:/Downloads/Images")
-            images.mkdir(parents=True, exist_ok=True)
             shutil.move(entry, images)
             print(f"Moved {entry} -> {images}")
         
         elif ext in (".mp4", ".mov", ".mkv", ".avi"):
             videos_count += 1
 
-            videos = Path("D:/Downloads/Videos")
-            videos.mkdir(parents=True, exist_ok=True) 
             shutil.move(entry, videos)
             print(f"Moved {entry} -> {videos}")
 
         elif ext in (".mp3", ".wav", ".m4a", ".acc"):
             audio_count += 1
 
-            audio = Path("D:/Downloads/Audio files")
-            audio.mkdir(parents=True, exist_ok=True) 
             shutil.move(entry, audio)
             print(f"Moved {entry} -> {audio}")
         
         elif ext in (".py", ".ipynb", ".java", ".html", ".cpp"):
             coding_count += 1
 
-            coding = Path("D:/Downloads/Coding Files")
-            coding.mkdir(parents=True, exist_ok=True) 
             shutil.move(entry, coding)
             print(f"Moved {entry} -> {coding}")
 
         elif ext == ".exe":
             setup_count += 1
 
-            setup = Path("D:/Downloads/Setups")
-            setup.mkdir(parents=True, exist_ok=True)
             shutil.move(entry, setup)
             print(f"Moved {entry} -> {setup}")
 
@@ -98,5 +101,6 @@ print(
     f"Videos {videos_count}\n"
     f"Audio {audio_count}\n"
     f"Coding files {coding_count}\n"
+    f"Setup files {setup_count}\n"
     f"Other files: {other_types}"
 )
