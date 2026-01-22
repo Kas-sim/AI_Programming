@@ -1,8 +1,12 @@
 import shutil
 from pathlib import Path
 
-Downloads = Path.home() / "Downloads"
-entries = list(Downloads.iterdir())
+base_path = Path(input("Enter path to organize: ")).expanduser().resolve()
+if not base_path.exists():
+    raise FileNotFoundError("That Folder does not exist.")
+
+# Downloads = Path.home() / "Downloads"
+entries = list(base_path.iterdir())
 
 folder_count = 0
 coding_count = 0
@@ -15,7 +19,7 @@ audio_count = 0
 setup_count = 0
 other_types = 0
 
-BASE = Path.home() / "Downloads"
+BASE = base_path 
 
 Pdfs   = BASE / "PDFs"
 Office = BASE / "Office files"
@@ -47,6 +51,7 @@ def file_move(destination: Path, source: Path):
         counter += 1
 
 
+print("\n")
 for entry in entries:
     if entry.is_dir():
         folder_count += 1
@@ -89,8 +94,7 @@ for entry in entries:
 
 
 print(
-    f"\nEverything Organized ;)\n"
-    f"\Downloads contain:\n"
+    f"{base_path} contain:\n"
     f"Total files: {len(entries)}\n"
     f"Subfolders: {folder_count}\n"
     f"Office files: {office_files}\n"
@@ -101,4 +105,5 @@ print(
     f"Coding files {coding_count}\n"
     f"Setup files {setup_count}\n"
     f"Other files: {other_types}"
+    f"\nEverything Organized ;)\n"
 )
