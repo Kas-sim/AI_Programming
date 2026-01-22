@@ -1,10 +1,19 @@
 import shutil
 from pathlib import Path
-from config import BASE, CATEGORIES
+from config import CATEGORIES_TEMPLATE
 
 BASE = Path(input("Enter folder you want to organize: ")).expanduser().resolve()
 if not BASE.exists():
     raise FileNotFoundError("This Folder does not exist.")
+
+CATEGORIES = {}
+
+for name, data in CATEGORIES_TEMPLATE.items():
+    CATEGORIES[name] = {
+        "folder": BASE / data["folder"],
+        "ext": data["ext"],
+        "count": 0
+    }
 
 entries = list(BASE.iterdir())
 folder_count = 0
@@ -16,7 +25,7 @@ for category in CATEGORIES.values():
 required_keys = {"folder", "ext", "count"}
 
 for name, category in CATEGORIES.items():
-    missing = required_keys - category.keys
+    missing = required_keys - category.keys()
     if missing:
         raise KeyError(f"Category '{name}' missing keys: {missing}")
       
