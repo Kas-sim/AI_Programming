@@ -1,8 +1,8 @@
 import shutil
 from pathlib import Path
 
-folder = Path("D:/Downloads")
-entries = list(folder.iterdir())
+Downloads = Path.home() / "Downloads"
+entries = list(Downloads.iterdir())
 
 folder_count = 0
 coding_count = 0
@@ -15,23 +15,20 @@ audio_count = 0
 setup_count = 0
 other_types = 0
 
-Pdfs = Path("D:/Downloads/PDFs")
-Pdfs.mkdir(parents=True, exist_ok=True)
-Office = Path("D:/Downloads/Office files")
-Office.mkdir(parents=True, exist_ok=True)
-text = Path("D:/Downloads/Text files")
-text.mkdir(parents=True, exist_ok=True)
-images = Path("D:/Downloads/Images")
-images.mkdir(parents=True, exist_ok=True)
-videos = Path("D:/Downloads/Videos")
-videos.mkdir(parents=True, exist_ok=True) 
-audio = Path("D:/Downloads/Audio files")
-audio.mkdir(parents=True, exist_ok=True) 
-coding = Path("D:/Downloads/Coding Files")
-coding.mkdir(parents=True, exist_ok=True) 
-setup = Path("D:/Downloads/Setups")
-setup.mkdir(parents=True, exist_ok=True)
-        
+BASE = Path.home() / "Downloads"
+
+Pdfs   = BASE / "PDFs"
+Office = BASE / "Office files"
+text   = BASE / "Text files"
+images = BASE / "Images"
+videos = BASE / "Videos"
+audio  = BASE / "Audio files"
+coding = BASE / "Coding Files"
+setup  = BASE / "Setups"
+
+for folder in [Pdfs, Office, text, images, videos, audio, coding, setup]:
+    folder.mkdir(exist_ok=True)
+       
 def file_move(destination: Path, source: Path):
     target = destination / source.name
     if not target.exists():
