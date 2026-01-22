@@ -15,7 +15,6 @@ audio_count = 0
 setup_count = 0
 other_types = 0
 
-
 Pdfs = Path("D:/Downloads/PDFs")
 Pdfs.mkdir(parents=True, exist_ok=True)
 Office = Path("D:/Downloads/Office files")
@@ -34,6 +33,9 @@ setup = Path("D:/Downloads/Setups")
 setup.mkdir(parents=True, exist_ok=True)
         
 
+def file_move(folder):
+    shutil.move(entry, folder)
+    print(f"Moved {entry} -> {folder}")
 
 for entry in entries:
     if entry.is_dir():
@@ -42,49 +44,35 @@ for entry in entries:
         ext = entry.suffix.lower()
         if ext == ".pdf":
             pdf_count += 1
-            shutil.move(entry, Pdfs)
-            print(f"Moved {entry} -> {Pdfs}!")
+            file_move(Pdfs)
 
         elif ext == ".docx" or ext == ".xlsx" or ext == ".pptx" or ext == ".accdb":
             office_files += 1
-            shutil.move(entry, Office)
-            print(f"Moved {entry} -> {Office}")
+            file_move(Office)
 
         elif ext in (".csv", ".json", ".txt", ".md"):
             text_count += 1
-
-            shutil.move(entry, text)
-            print(f"Moved {entry} -> {text}")
+            file_move(text)
 
         elif ext in (".png", ".jpg", ".jpeg", ".ico"):
             images_count += 1
+            file_move(images)
 
-            shutil.move(entry, images)
-            print(f"Moved {entry} -> {images}")
-        
         elif ext in (".mp4", ".mov", ".mkv", ".avi"):
             videos_count += 1
-
-            shutil.move(entry, videos)
-            print(f"Moved {entry} -> {videos}")
+            file_move(videos)
 
         elif ext in (".mp3", ".wav", ".m4a", ".acc"):
             audio_count += 1
-
-            shutil.move(entry, audio)
-            print(f"Moved {entry} -> {audio}")
+            file_move(audio)
         
         elif ext in (".py", ".ipynb", ".java", ".html", ".cpp"):
             coding_count += 1
-
-            shutil.move(entry, coding)
-            print(f"Moved {entry} -> {coding}")
+            file_move(coding)
 
         elif ext == ".exe":
             setup_count += 1
-
-            shutil.move(entry, setup)
-            print(f"Moved {entry} -> {setup}")
+            file_move(setup)
 
         else:
             other_types += 1
