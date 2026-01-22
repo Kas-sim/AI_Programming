@@ -32,10 +32,23 @@ coding.mkdir(parents=True, exist_ok=True)
 setup = Path("D:/Downloads/Setups")
 setup.mkdir(parents=True, exist_ok=True)
         
+def file_move(destination: Path, source: Path):
+    target = destination / source.name
+    if not target.exists():
+        shutil.move(source, target)
+        print(f"Moved {source.name} -> {destination}")
+        return
+    
+    counter = 1
+    while True:
+        new_name = f"{source.name}({counter}){source.suffix}"
+        target = destination / new_name
+        if not target.exists():
+            shutil.move(source, target)
+            print(f"Moved {source.name} -> {new_name}")
+            break
+        counter += 1
 
-def file_move(folder):
-    shutil.move(entry, folder)
-    print(f"Moved {entry} -> {folder}")
 
 for entry in entries:
     if entry.is_dir():
@@ -44,11 +57,11 @@ for entry in entries:
         ext = entry.suffix.lower()
         if ext == ".pdf":
             pdf_count += 1
-            file_move(Pdfs)
+            file_move(Pdfs, entry)
 
         elif ext == ".docx" or ext == ".xlsx" or ext == ".pptx" or ext == ".accdb":
             office_files += 1
-            file_move(Office)
+            file_move(Office, entry)
 
         elif ext in (".csv", ".json", ".txt", ".md"):
             text_count += 1
@@ -56,23 +69,23 @@ for entry in entries:
 
         elif ext in (".png", ".jpg", ".jpeg", ".ico"):
             images_count += 1
-            file_move(images)
+            file_move(images, entry)
 
         elif ext in (".mp4", ".mov", ".mkv", ".avi"):
             videos_count += 1
-            file_move(videos)
+            file_move(videos, entry)
 
         elif ext in (".mp3", ".wav", ".m4a", ".acc"):
             audio_count += 1
-            file_move(audio)
+            file_move(audio, entry)
         
         elif ext in (".py", ".ipynb", ".java", ".html", ".cpp"):
             coding_count += 1
-            file_move(coding)
+            file_move(coding, entry)
 
         elif ext == ".exe":
             setup_count += 1
-            file_move(setup)
+            file_move(setup, entry)
 
         else:
             other_types += 1
