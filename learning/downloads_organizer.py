@@ -1,3 +1,4 @@
+import shutil
 from pathlib import Path
 
 folder = Path("D:/Downloads")
@@ -13,14 +14,19 @@ images_count = 0
 folder_count = 0
 other_types = 0
 
+
 for entry in entries:
     if entry.is_dir():
         folder_count += 1
     else:
         ext = entry.suffix.lower()
-
         if ext == ".pdf":
             pdf_count += 1
+
+            Pdfs = Path("D:/Downloads/PDFs")
+            Pdfs.mkdir(parents=True, exist_ok=True)
+            shutil.move(entry, Pdfs)
+
         elif ext == ".docx":
             doc_count += 1
         elif ext == ".csv":
