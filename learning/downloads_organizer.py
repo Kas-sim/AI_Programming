@@ -4,13 +4,15 @@ from pathlib import Path
 folder = Path("D:/Downloads")
 entries = list(folder.iterdir())
 
-print(f"{folder} contains {len(entries)} files!\n")
-
+folder_count = 0
+coding_count = 0
 pdf_count = 0
 office_files = 0
 text_count = 0
 images_count = 0
-folder_count = 0
+videos_count = 0
+audio_count = 0
+setup_count = 0
 other_types = 0
 
 
@@ -41,21 +43,60 @@ for entry in entries:
             shutil.move(entry, text)
             print(f"Moved {entry} -> {text}")
 
-        elif ext in (".png", ".jpg", ".jpeg"):
+        elif ext in (".png", ".jpg", ".jpeg", ".ico"):
             images_count += 1
+
             images = Path("D:/Downloads/Images")
             images.mkdir(parents=True, exist_ok=True)
             shutil.move(entry, images)
             print(f"Moved {entry} -> {images}")
+        
+        elif ext in (".mp4", ".mov", ".mkv", ".avi"):
+            videos_count += 1
+
+            videos = Path("D:/Downloads/Videos")
+            videos.mkdir(parents=True, exist_ok=True) 
+            shutil.move(entry, videos)
+            print(f"Moved {entry} -> {videos}")
+
+        elif ext in (".mp3", ".wav", ".m4a", ".acc"):
+            audio_count += 1
+
+            audio = Path("D:/Downloads/Audio files")
+            audio.mkdir(parents=True, exist_ok=True) 
+            shutil.move(entry, audio)
+            print(f"Moved {entry} -> {audio}")
+        
+        elif ext in (".py", ".ipynb", ".java", ".html", ".cpp"):
+            coding_count += 1
+
+            coding = Path("D:/Downloads/Coding Files")
+            coding.mkdir(parents=True, exist_ok=True) 
+            shutil.move(entry, coding)
+            print(f"Moved {entry} -> {coding}")
+
+        elif ext == ".exe":
+            setup_count += 1
+
+            setup = Path("D:/Downloads/Setups")
+            setup.mkdir(parents=True, exist_ok=True)
+            shutil.move(entry, setup)
+            print(f"Moved {entry} -> {setup}")
 
         else:
             other_types += 1
 
+
 print(
+    f"\nEverything Organized ;)\n"
+    f"\Downloads contain:\n"
     f"Total files: {len(entries)}\n"
     f"Subfolders: {folder_count}\n"
     f"Office files: {office_files}\n"
     f"Text files: {text_count}\n"
     f"Images: {images_count}\n"
+    f"Videos {videos_count}\n"
+    f"Audio {audio_count}\n"
+    f"Coding files {coding_count}\n"
     f"Other files: {other_types}"
 )
