@@ -7,7 +7,7 @@ entries = list(folder.iterdir())
 print(f"{folder} contains {len(entries)} files!\n")
 
 pdf_count = 0
-doc_count = 0
+office_files = 0
 csv_count = 0
 text_count = 0
 images_count = 0
@@ -22,13 +22,18 @@ for entry in entries:
         ext = entry.suffix.lower()
         if ext == ".pdf":
             pdf_count += 1
-
             Pdfs = Path("D:/Downloads/PDFs")
             Pdfs.mkdir(parents=True, exist_ok=True)
             shutil.move(entry, Pdfs)
+            print(f"Moved {entry} -> {Pdfs}!")
 
-        elif ext == ".docx":
-            doc_count += 1
+        elif ext == ".docx" or ext == ".xlsx" or ext == ".pptx" or ext == ".accdb":
+            office_files += 1
+            Office = Path("D:/Downloads/Office files")
+            Office.mkdir(parents=True, exist_ok=True)
+            shutil.move(entry, Office)
+            print(f"Moved {entry} -> {Office}")
+
         elif ext == ".csv":
             csv_count += 1
         elif ext in (".png", ".jpg", ".jpeg"):
@@ -42,7 +47,7 @@ print(
     f"Total files: {len(entries)}\n"
     f"Subfolders: {folder_count}\n"
     f"Pdfs: {pdf_count}\n"
-    f"Word files: {doc_count}\n"
+    f"Office files: {office_files}\n"
     f"Text files: {text_count}\n"
     f"CSV files: {csv_count}\n"
     f"Images: {images_count}\n"
