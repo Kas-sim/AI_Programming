@@ -1,7 +1,5 @@
 from pathlib import Path
 
-BASE = None  
-
 CATEGORIES_TEMPLATE = {
     "PDFs": {
         "folder": "PDFs",

@@ -3,7 +3,7 @@ from pathlib import Path
 from config import CATEGORIES_TEMPLATE
 
 BASE = Path(input("Enter folder you want to organize: ")).expanduser().resolve()
-if not BASE.exists():
+if not BASE.exists() or not BASE.is_dir():
     raise FileNotFoundError("This Folder does not exist.")
 
 CATEGORIES = {}
@@ -15,12 +15,11 @@ for name, data in CATEGORIES_TEMPLATE.items():
         "count": 0
     }
 
-entries = list(BASE.iterdir())
-folder_count = 0
-other_types = 0
-
 for category in CATEGORIES.values():
     category["folder"].mkdir(exist_ok=True)
+
+folder_count = 0
+other_types = 0
 
 required_keys = {"folder", "ext", "count"}
 
@@ -47,6 +46,7 @@ def file_move(destination: Path, source: Path):
             break
         counter += 1
 
+entries = list(BASE.iterdir())
 DESTINATION_FOLDERS = {cat["folder"] for cat in CATEGORIES.values()}
 
 for entry in entries:
@@ -67,6 +67,11 @@ for entry in entries:
     
     if not moved:
         other_types += 1
+
+for dstn in DESTINATION_FOLDERS:
+    if dstn.exists() and dstn.is_dir() and not any(dstn.iterdir()):
+        dstn.rmdir()
+
 
 print(f"\n{BASE} contains:\n")
 print(f"Total items: {len(entries)}")
